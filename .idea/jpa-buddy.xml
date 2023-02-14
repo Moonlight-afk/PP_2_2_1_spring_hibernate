@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" ddlActionDbType="mysql">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+    <option name="isSnapshotDb" value="false" />
+    <option name="snapshotDbValue" value="e8a5077e-69da-46cf-a27f-75d8349daf46" />
+    <option name="snapshotModelValue" value="Default" />
+  </component>
+</project>

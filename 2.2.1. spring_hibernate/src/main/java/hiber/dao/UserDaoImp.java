@@ -1,12 +1,11 @@
 package hiber.dao;
 
-import hiber.model.Car;
 import hiber.model.User;
 
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
@@ -16,8 +15,11 @@ import java.util.List;
 @Repository
 public class UserDaoImp implements UserDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public UserDaoImp(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public void add(User user) {
@@ -32,7 +34,6 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void deleteAllUsers() {
         List<User> users = listUsers();
         for (User user : users) {
@@ -42,19 +43,8 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public User findOwner(String car_name, int car_series) {
-        TypedQuery<Car> findCarQuery = sessionFactory.getCurrentSession().createQuery("from Car where model = :car_name and series = :car_series")
-                .setParameter("car_name", car_name)
-                .setParameter("car_series", car_series);
-        List<Car> findCarList = findCarQuery.getResultList();
-        if (!findCarList.isEmpty()) {
-            Car findCar = findCarList.get(0);
-            List<User> ListUser = listUsers();
-            User FindUser = ListUser.stream()
-                    .filter(user -> user.getCar().equals(findCar))
-                    .findAny()
-                    .orElse(null);
-            return FindUser;
-        }
-        return null;
+        Query query = sessionFactory.getCurrentSession().createQuery("select u from User u,Car c where u.car.id = c.id and c.model = :car_name and " +
+                "c.series = :car_series");
+        return (User) query.setParameter("car_name",car_name).setParameter("car_series",car_series).getSingleResult();
     }
 }

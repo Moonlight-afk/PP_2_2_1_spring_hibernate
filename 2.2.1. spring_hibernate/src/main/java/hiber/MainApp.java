@@ -17,10 +17,10 @@ public class MainApp {
 
       CarService carService = context.getBean(CarService.class);
       //carService.deleteAllCars();
-      carService.add(new Car("BMW", 320));
+      /*carService.add(new Car("BMW", 320));
       carService.add(new Car("BMW", 5));
       carService.add(new Car("BMW", 750));
-      carService.add(new Car("BMW", 6));
+      carService.add(new Car("BMW", 6));*/
 
       UserService userService = context.getBean(UserService.class);
       List<Car> cars = carService.listCars();
@@ -29,6 +29,7 @@ public class MainApp {
       userService.add(new User("User2", "Lastname2", "user2@mail.ru", cars.get(1)));
       userService.add(new User("User3", "Lastname3", "user3@mail.ru", cars.get(2)));
       userService.add(new User("User4", "Lastname4", "user4@mail.ru", cars.get(3)));
+      //userService.add(new User("User5", "Lastname5", "user5@mail.ru", cars.get(1)));
 
       List<User> users = userService.listUsers();
       for (User user : users) {
